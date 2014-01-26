@@ -1,0 +1,81 @@
+config = require './app/lib/config'
+logger = require './app/lib/logger'
+
+process.on 'uncaughtException', (err) ->
+  logger.error 'Something very bad happened: ', err.message
+  logger.error err.stack
+  process.exit 1  # because now, you are in unpredictable state!
+
+memwatch = require 'memwatch'
+memwatch.on 'leak', (d) ->
+  logger.error "LEAK: #{JSON.stringify(d)}"
+
+express = require 'express'
+app = express()
+app.logger = logger
+
+mongoose = require 'mongoose'
+mongoose.connect config.DBURL
+logger.info "mongo connected to", config.DBURL
+
+mongoStore = require('connect-mongo')(express)
+helmet = require 'helmet'
+passport = require 'passport'
+multipart = require 'connect-multiparty'
+
+app.configure ->
+  app.set 'port', config.PORT
+  app.set 'routes', __dirname + '/app/routes/'
+  app.set 'models', __dirname + '/app/models/'
+  app.set 'config', config
+
+  app.use helmet.xframe()
+  app.use helmet.iexss()
+  app.use helmet.contentTypeOptions()
+  app.use helmet.cacheControl()
+
+  app.use express.json()
+  app.use express.urlencoded()
+  app.use multipart()
+  app.use express.methodOverride()
+  app.use express.cookieParser()
+  app.use passport.initialize()
+  app.use express.session({
+    store: new mongoStore({
+      url: config.DBURL
+    }),
+    secret: config.COOKIE_SECRET,
+    cookie: {httpOnly: true, secure: true}
+  })
+  ### todo: bind this to angular frontend
+  if process.env.NODE_ENV == 'production'
+    app.use express.csrf()
+    app.use (req, res, next) ->
+      res.locals.csrftoken = req.csrfToken()
+      next()
+  ###
+  app.use express.compress()
+  app.use app.router
+  app.use express.favicon()
+  app.use express.static __dirname + '/public'
+
+  app.use (err, req, res, next) ->
+    if (~err.message.indexOf('not found')) then return next()
+    logger.error err.stack
+    res.status(500).render('500',
+      error: err.stack
+    )
+
+  app.use (req, res, next) ->
+    res.status(404).render('404',
+      url: req.originalUrl
+      error: 'Not found'
+    )
+
+require('./app/models')(app)
+require('./app/lib/auth_provider').configure()
+require('./app/routes')(app)
+
+app.listen app.get('port'), ->
+  logger.info "mean.coffee server listening on port #{@address().port} in #{config.ENV} mode"
+

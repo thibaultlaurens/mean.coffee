@@ -1,0 +1,6 @@
+{"level":"info","message":"Logger configured","timestamp":"2014-01-26T16:20:24.729Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meancoffeedb","timestamp":"2014-01-26T16:20:25.041Z"}
+{"level":"info","message":"mean.coffee server listening on port 3000 in development mode","timestamp":"2014-01-26T16:20:25.248Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-01-26T16:20:45.358Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meancoffeedb","timestamp":"2014-01-26T16:20:45.681Z"}
+{"level":"info","message":"mean.coffee server listening on port 3000 in development mode","timestamp":"2014-01-26T16:20:45.888Z"}
