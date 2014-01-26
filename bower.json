@@ -1,0 +1,14 @@
+{
+    "name": "mean-coffee",
+    "version": "0.0.1",
+    "dependencies": {
+        "angular": "1.2.10",
+        "angular-resource": "latest",
+        "angular-cookies": "latest",
+        "angular-mocks": "latest",
+        "angular-route": "latest",
+        "bootstrap": "3.0.3",
+        "angular-bootstrap": "0.10.0",
+        "angular-ui-utils": "0.1.0"
+    }
+}

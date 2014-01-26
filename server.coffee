@@ -23,7 +23,18 @@ helmet = require 'helmet'
 passport = require 'passport'
 multipart = require 'connect-multiparty'
 
+app.set 'showStackError', true
+app.locals.pretty = true
+app.use express.compress( # Should be placed before express.static to ensure that all assets and data are compressed (utilize bandwidth)
+  filter: (req, res) ->
+    return (/json|text|javascript|css/).test(res.getHeader('Content-Type'))
+  , level: 9 # Levels are specified in a range of 0 to 9, where-as 0 is no compression and 9 is best compression, but slowest
+)
+app.set 'views', __dirname + '/app/views' #Set views path, template engine and default layout
+app.set 'view engine', 'jade'
+
 app.configure ->
+
   app.set 'port', config.PORT
   app.set 'routes', __dirname + '/app/routes/'
   app.set 'models', __dirname + '/app/models/'
