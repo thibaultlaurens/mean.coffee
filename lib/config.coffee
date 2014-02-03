@@ -1,7 +1,7 @@
 base =
   ENV: process.env.NODE_ENV || 'development'
   PORT: process.env.PORT || 3000
-  LOGPATH: "logger.log"
+  LOGPATH: "mean.coffee.log"
   COOKIE_SECRET: "thisisthesecretforthesession"
 
 

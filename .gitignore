@@ -1,5 +1,7 @@
 .DS_Store
-node_modules/
 .log
 .idea
-public/lib
+
+node_modules
+_public
+app/components

@@ -14,11 +14,12 @@
   },
   "scripts": {
     "start": "node node_modules/grunt-cli/bin/grunt",
-    "postinstall": "node node_modules/bower/bin/bower install"
+    "gulp": "gulp --require coffee-script",
+    "gulp-build": "gulp build --require coffee-script",
+    "test": "mocha --compilers coffee:coffee-script"
   },
   "dependencies": {
     "express": "~3.4.7",
-    "jade": "~1.0.2",
     "mongoose": "~3.8.3",
     "connect-mongo": "~0.4.0",
     "winston": "~0.7.2",
@@ -29,15 +30,21 @@
     "connect-multiparty": "~1.0.3",
     "memwatch": "~0.2.2",
     "forever": "~0.10.11",
-    "bower": "~1.2.8"
+    "nodetime": "~0.8.15"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-cli": "~0.1.11",
-    "grunt-env": "~0.4.1",
-    "grunt-concurrent": "~0.4.2",
-    "grunt-nodemon": "0.1.2",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-coffee": "~0.8.2"
+    "should": "2.0.*",
+    "supertest": "0.8.*",
+    "mocha": "1.13.*",
+    "gulp": "~3.5.1",
+    "gulp-coffee": "~1.4.1",
+    "gulp-util": "~2.2.14",
+    "gulp-watch": "~0.5.0",
+    "gulp-concat": "~2.1.7",
+    "gulp-uglify": "~0.2.0",
+    "gulp-imagemin": "~0.1.4",
+    "gulp-clean": "~0.2.4",
+    "gulp-flatten": "0.0.2",
+    "gulp-minify-css": "~0.2.0"
   }
 }
