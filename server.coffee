@@ -76,19 +76,6 @@ app.configure ->
   app.use express.favicon()
   app.use express.static __dirname + '/_public'
 
-  app.use (err, req, res, next) ->
-    if (~err.message.indexOf('not found')) then return next()
-    logger.error err.stack
-    res.status(500).render('500',
-      error: err.stack
-    )
-
-  app.use (req, res, next) ->
-    res.status(404).render('404',
-      url: req.originalUrl
-      error: 'Not found'
-    )
-
 require('./models')(app)
 require('./lib/auth_provider').configure()
 require('./routes')(app)

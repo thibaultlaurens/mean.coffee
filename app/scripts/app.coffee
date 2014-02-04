@@ -1,6 +1,4 @@
 'use strict'
 
-angular.module 'mean', ['ngCookies', 'ngResource', 'ngRoute', 'ui.bootstrap', 'ui.route', 'mean.system', 'mean.articles']
-
-angular.module 'mean.system', []
-angular.module 'mean.users', []
+angular.module 'meanApp', ['ngCookies', 'ngResource', 'ngRoute', 'ui.bootstrap', 'ui.route', 'meanApp.controller']
+angular.module('meanApp.controller', []);

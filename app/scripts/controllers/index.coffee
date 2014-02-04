@@ -1,5 +1,5 @@
 'use strict'
 
-angular.module('mean.system').controller('IndexController', ['$scope', 'Global', ($scope, Global) ->
+angular.module('meanApp.controller').controller('IndexController', ['$scope', 'Global', ($scope, Global) ->
   $scope.global = Global
 ])

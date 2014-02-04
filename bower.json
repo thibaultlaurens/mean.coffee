@@ -1,14 +1,14 @@
 {
-    "name": "mean.coffee",
-    "version": "0.0.1",
-    "dependencies": {
-        "angular": "~1.2.10",
-        "bootstrap": "~3.1.0",
-        "angular-resource": "latest",
-        "angular-cookies": "latest",
-        "angular-mocks": "latest",
-        "angular-route": "latest",
-        "angular-bootstrap": "0.10.0",
-        "angular-ui-utils": "0.1.0"
-    }
+  "name": "mean.coffee",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.2.10",
+    "bootstrap": "~3.1.0",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-mocks": "latest",
+    "angular-route": "latest",
+    "angular-bootstrap": "~0.10.0",
+    "angular-ui-utils": "~0.1.0"
+  }
 }

@@ -1,21 +1,24 @@
 'use strict'
 
 #Setting up route
-angular.module('mean').config ['$routeProvider',
+angular.module('meanApp').config ['$routeProvider',
   ($routeProvider) ->
         $routeProvider
           .when '/users',
-            templateUrl: 'views/users/list.html'
-          .when '/users/:userId',
-            templateUrl: 'views/users/view.html'
+            templateUrl: 'views/users.html'
           .when '/',
-            templateUrl: 'views/index.html'
+            templateUrl: 'views/main.html'
+            controller: 'MainController'
+          .when '/500',
+              templateUrl: 'views/500.html'
+          .when '/404',
+              templateUrl: 'views/404.html'
           .otherwise
-          redirectTo: '/'
+            redirectTo: '/404'
 ]
 
 #Setting HTML5 Location Mode
-angular.module('mean').config ['$locationProvider',
+angular.module('mean.coffee').config ['$locationProvider',
 
   ($locationProvider) ->
     $locationProvider.hashPrefix('!')

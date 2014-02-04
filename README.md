@@ -42,3 +42,5 @@ inspired by http://mean.io/
 - TEST with mocha/karma
 - forever script + git hook for custom deployment
 - procfile for heroku deployment
+- gulp dev/prod distinct folders
+- remove gulp trick for jquery loaded first
