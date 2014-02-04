@@ -1,7 +1,10 @@
 .DS_Store
-.log
 .idea
+*.log
 
 node_modules
 _public
 app/components
+
+
+

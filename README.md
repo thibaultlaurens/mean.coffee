@@ -10,16 +10,16 @@ inspired by http://mean.io/
 ### How to mean.coffee
 
 - Install prerequisites
-        npm install -g coffee-script
-        npm install -g bower
-        npm install -g gulp
+    - npm install -g coffee-script
+    - npm install -g bower
+    - npm install -g gulp
 
 - Install dependencies:
-        npm install
-        bower install
+    - npm install
+    - bower install
 
 - Run the server
-        coffee server.coffee
+    - coffee server.coffee
 
 
 ### Differences compared to mean.io:
