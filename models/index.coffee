@@ -1,11 +1,11 @@
 fs = require 'fs'
 path = require 'path'
 
-module.exports = (app) ->
-  fs.readdirSync(app.settings.models).forEach((file) ->
-    filePath = path.join app.settings.models, file
+module.exports = () ->
+
+  fs.readdirSync(__dirname).forEach (file) ->
+    filePath = path.join __dirname, file
     unless filePath is __filename
       baseFilename = path.basename file, path.extname(file)
-      model = path.join app.settings.models, baseFilename
+      model = path.join __dirname, baseFilename
       require(model)
-  )

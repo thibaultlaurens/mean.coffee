@@ -1,8 +1,8 @@
-passport = require("passport")
+mongoose = require 'mongoose'
 BasicStrategy = require('passport-http').BasicStrategy
 User = require("../models/user")
 
-exports.configure = () ->
+module.exports = (passport) ->
 
   passport.use new BasicStrategy ({}), (username, password, done) ->
     User.findOne { username: username }, (err, user) ->

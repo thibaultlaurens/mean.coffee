@@ -1,5 +1,5 @@
-logger = require '../lib/logger'
-auth = require '../lib/auth'
+logger = require '../config/logger'
+auth = require '../config/auth'
 
 user_service = require '../services/service.user'
 

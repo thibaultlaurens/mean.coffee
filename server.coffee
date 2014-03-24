@@ -1,85 +1,63 @@
+# monitoring with nodetime
 if process.env.NODE_ENV == 'production'
   require('nodetime').profile(
-    accountKey: ""
+    accountKey: "ENTER-A-VALID-KEY-HERE"
     appName: 'mean.coffee'
   )
 
-config = require './lib/config'
-logger = require './lib/logger'
+# dependencies
+config = require './config/config'
+logger = require './config/logger'
+express = require 'express'
+mongoose = require 'mongoose'
+passport = require 'passport'
 
+root_path = __dirname
+
+# catch all uncaught exceptions
 process.on 'uncaughtException', (err) ->
   logger.error 'Something very bad happened: ', err.message
   logger.error err.stack
   process.exit 1  # because now, you are in unpredictable state!
 
+# watch and log any leak (a lot of false positive though)
 memwatch = require 'memwatch'
-memwatch.on 'leak', (d) ->
-  logger.error "LEAK: #{JSON.stringify(d)}"
+memwatch.on 'leak', (d) -> logger.error "LEAK: #{JSON.stringify(d)}"
 
-express = require 'express'
-app = express()
-app.logger = logger
-
-mongoose = require 'mongoose'
-mongoose.connect config.DBURL
+# bootstap db connection
+db = mongoose.connect config.DBURL
 logger.info "mongo connected to", config.DBURL
 
-mongoStore = require('connect-mongo')(express)
-helmet = require 'helmet'
-passport = require 'passport'
-multipart = require 'connect-multiparty'
+# exit on db connection error
+mongoose.connection.on 'error', (err) ->
+  logger.error "mongodb error: #{err}"
+  process.exit 1
 
-#app.set 'showStackError', true
-#app.locals.pretty = true
-###
-app.use express.compress( # Should be placed before express.static to ensure that all assets and data are compressed (utilize bandwidth)
-  filter: (req, res) ->
-    return (/json|text|javascript|css/).test(res.getHeader('Content-Type'))
-  , level: 9 # Levels are specified in a range of 0 to 9, where-as 0 is no compression and 9 is best compression, but slowest
-)
-###
+# retry 10 times on db connection lost
+attempt = 1
+mongoose.connection.on 'disconnected', () ->
+  if attempt < 10
+    logger.error "mongodb disconnected, trying to reconnect.."
+    logger.info "mongodb reconnect, attempt num #{attempt}"
+    attempt += 1
+    db = mongoose.connect config.DBURL, opts
+  else
+    logger.error "mongodb disconnect, giving up!"
 
-app.configure ->
+# bootstrap models
+require('./models')()
 
-  app.set 'port', config.PORT
-  app.set 'routes', __dirname + '/routes/'
-  app.set 'models', __dirname + '/models/'
-  app.set 'config', config
+# bootstrap passport config
+require('./config/passport')(passport)
 
-  app.use helmet.xframe()
-  app.use helmet.iexss()
-  app.use helmet.contentTypeOptions()
-  app.use helmet.cacheControl()
+# express configuration
+app = express()
+require("./config/express")(app, passport, db, logger, root_path)
 
-  app.use express.json()
-  app.use express.urlencoded()
-  app.use multipart()
-  app.use express.methodOverride()
-  app.use express.cookieParser()
-  app.use passport.initialize()
-  app.use express.session({
-    store: new mongoStore({
-      url: config.DBURL
-    }),
-    secret: config.COOKIE_SECRET,
-    cookie: {httpOnly: true, secure: true}
-  })
-  ### todo: bind this to angular frontend
-  if process.env.NODE_ENV == 'production'
-    app.use express.csrf()
-    app.use (req, res, next) ->
-      res.locals.csrftoken = req.csrfToken()
-      next()
-  ###
-  app.use express.compress()
-  app.use app.router
-  app.use express.favicon()
-  app.use express.static __dirname + '/_public'
+# bootstrap routes
+require("./routes")(app)
 
-require('./models')(app)
-require('./lib/auth_provider').configure()
-require('./routes')(app)
-
+# start the app
 app.listen app.get('port'), ->
   logger.info "mean.coffee server listening on port #{@address().port} in #{config.ENV} mode"
 

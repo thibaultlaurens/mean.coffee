@@ -4,14 +4,11 @@ base =
   LOGPATH: "mean.coffee.log"
   COOKIE_SECRET: "thisisthesecretforthesession"
 
-
 dev =
   DBURL: "mongodb://localhost/meancoffeedb"
 
-
 prod =
   DBURL: "mongodb://localhost/meancoffeedb"
-
 
 mergeConfig = (config) ->
   for key, val of config

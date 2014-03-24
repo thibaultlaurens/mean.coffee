@@ -14,9 +14,10 @@
   },
   "scripts": {
     "start": "coffee server.coffee",
-    "gulp": "gulp --require coffee-script",
+    "gulp": "gulp dev --require coffee-script",
     "gulp-build": "gulp build --require coffee-script",
-    "test": "mocha --compilers coffee:coffee-script"
+    "test": "mocha --compilers coffee:coffee-script",
+    "postinstall": "bower install"
   },
   "dependencies": {
     "express": "~3.4.7",

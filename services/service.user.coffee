@@ -1,4 +1,4 @@
-logger = require '../lib/logger'
+logger = require '../config/logger'
 
 mongoose = require 'mongoose'
 User = mongoose.model 'User'

@@ -76,6 +76,8 @@ gulp.task 'clean', () ->
     .pipe(clean())
 
 
-gulp.task 'default', ['scripts', 'styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets', 'watch']
+gulp.task 'default', ['scripts', 'styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets']
+
+gulp.task 'dev', ['default', 'watch']
 
 gulp.task 'build', ['clean', 'default']

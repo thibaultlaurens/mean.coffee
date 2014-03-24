@@ -15,11 +15,14 @@ inspired by http://mean.io/
     - npm install -g gulp
 
 - Install dependencies:
-    - npm install
-    - bower install
+    - npm install (will bower install as well)
 
 - Run the server
-    - coffee server.coffee
+    - npm start || coffee server.coffee
+
+- Run gulp
+    - npm run gulp (for dev)
+    - npm run gulp-build (for prod)
 
 
 ### Differences compared to mean.io:
@@ -29,9 +32,8 @@ inspired by http://mean.io/
 - don't use any template engine:
     - the node.js server only serve static html files
     - angularJS will do the rest (routing + calling the REST API)
-- code to manipulate model objects are in the service folder (instead of app/controller in mean.io)
-- configuration file is in lib/config.coffee
-- little extra
+- code to manipulate model objects is in the service folder (instead of app/controller in mean.io)
+- extra stuff:
     - winston (logger) - lib/logger.coffee
     - memwatch (for memory leaks) - server.coffee
     - nodetime (monitoring) - server.coffee
