@@ -43,5 +43,3 @@ inspired by http://mean.io/
 
 - forever script + git hook for custom deployment
 - procfile for heroku deployment
-- gulp dev/prod distinct folders
-- remove gulp trick for jquery loaded first

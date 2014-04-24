@@ -23,6 +23,13 @@ gulp.task 'scripts', () ->
   gulp.src(path.scripts)
     .pipe(coffee({bare: true}).on 'error', gutil.log)
     .pipe(concat 'app.min.js')
+    .pipe(size())
+    .pipe(gulp.dest '_public/js')
+
+gulp.task 'uglyscripts', () ->
+  gulp.src(path.scripts)
+    .pipe(coffee({bare: true}).on 'error', gutil.log)
+    .pipe(concat 'app.min.js')
     .pipe(uglify())
     .pipe(size())
     .pipe(gulp.dest '_public/js')
@@ -76,8 +83,8 @@ gulp.task 'clean', () ->
     .pipe(clean())
 
 
-gulp.task 'default', ['scripts', 'styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets']
+gulp.task 'default', ['styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets']
 
-gulp.task 'dev', ['default', 'watch']
+gulp.task 'dev', ['default', 'scripts', 'watch']
 
-gulp.task 'build', ['clean', 'default']
+gulp.task 'build', ['clean', 'default', 'uglyscripts']
