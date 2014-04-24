@@ -1,5 +1,5 @@
-'use strict';
+meanApp.controller 'UserController', ['$scope', 'Global', ($scope, Global) ->
 
-angular.module('meanApp.controller').controller('UsersController',
-  ['$scope', '$routeParams', '$location', 'Global', 'Articles', ($scope, $routeParams, $location, Global, Users) -> {}
-  ])
+  $scope.global = Global
+
+]

@@ -71,6 +71,13 @@ gulp.task 'assets', () ->
     .pipe(size())
     .pipe(gulp.dest '_public/assets')
 
+gulp.task 'ngroute', () ->
+  gulp.src('app/components/angular-route/angular-route.min.js')
+  .pipe(flatten())
+  .pipe(concat 'ngroute.min.js')
+  .pipe(size())
+  .pipe(gulp.dest('_public/js'))
+
 gulp.task 'watch', () ->
   gulp.watch path.scripts, ['scripts']
   gulp.watch path.styles, ['styles']
@@ -83,7 +90,7 @@ gulp.task 'clean', () ->
     .pipe(clean())
 
 
-gulp.task 'default', ['styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets']
+gulp.task 'default', ['styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
 
 gulp.task 'dev', ['default', 'scripts', 'watch']
 

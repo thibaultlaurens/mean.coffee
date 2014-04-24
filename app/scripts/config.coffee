@@ -1,11 +1,10 @@
-'use strict'
-
 #Setting up route
-angular.module('meanApp').config ['$routeProvider',
+meanApp.config ['$routeProvider',
   ($routeProvider) ->
         $routeProvider
           .when '/users',
             templateUrl: 'views/users.html'
+            controller: 'UserController'
           .when '/',
             templateUrl: 'views/main.html'
             controller: 'MainController'
@@ -18,9 +17,8 @@ angular.module('meanApp').config ['$routeProvider',
 ]
 
 #Setting HTML5 Location Mode
-angular.module('mean.coffee').config ['$locationProvider',
+#meanApp.config ['$locationProvider',
 
-  ($locationProvider) ->
-    $locationProvider.hashPrefix('!')
+  #($locationProvider) -> $locationProvider.html5Mode(true)
 
-]
+#]

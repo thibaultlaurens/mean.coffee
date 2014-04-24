@@ -1,7 +1,5 @@
-'use strict'
-
 #Global service for global variables
-angular.module('meanApp.system').factory 'Global', [
+meanApp.factory 'Global', [
 
   () ->
     _this = this
