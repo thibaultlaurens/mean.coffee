@@ -16,7 +16,7 @@
     "start": "coffee server.coffee",
     "gulp": "gulp dev --require coffee-script/register",
     "gulp-build": "gulp build --require coffee-script/register",
-    "test": "mocha --compilers coffee:coffee-script/register",
+    "test": "mocha --compilers coffee:coffee-script/register --reporter nyan",
     "postinstall": "bower install"
   },
   "dependencies": {
@@ -44,7 +44,6 @@
   },
   "devDependencies": {
     "chai": "1.9.x",
-    "should": "3.3.x",
     "supertest": "0.11.x",
     "mocha": "1.18.x",
     "gulp": "3.6.x",

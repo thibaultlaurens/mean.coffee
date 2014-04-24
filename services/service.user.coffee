@@ -17,6 +17,10 @@ module.exports =
       password: pwd
     user.save (err) -> cb err, user
 
+  deleteUser: (id, cb) ->
+    User.findOneAndRemove {'_id': id}, (err, user) -> cb err, user
+
+
 
 
 

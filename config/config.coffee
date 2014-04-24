@@ -3,12 +3,13 @@ base =
   PORT: process.env.PORT || 3000
   LOGPATH: "mean.coffee.log"
   COOKIE_SECRET: "thisisthesecretforthesession"
+  DBURLTEST: "mongodb://localhost/meandb_test"
 
 dev =
-  DBURL: "mongodb://localhost/meancoffeedb"
+  DBURL: "mongodb://localhost/meandb"
 
 prod =
-  DBURL: "mongodb://localhost/meancoffeedb"
+  DBURL: "mongodb://localhost/meandb"
 
 mergeConfig = (config) ->
   for key, val of config

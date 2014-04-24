@@ -41,7 +41,6 @@ inspired by http://mean.io/
 
 ### TODO
 
-- TEST with mocha/karma
 - forever script + git hook for custom deployment
 - procfile for heroku deployment
 - gulp dev/prod distinct folders
