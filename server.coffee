@@ -51,8 +51,7 @@ require('./models')()
 require('./config/passport')(passport)
 
 # express configuration
-app = express()
-require("./config/express")(app, passport, db, logger, root_path)
+app = require("./config/express")(passport, db, logger, root_path)
 
 # bootstrap routes
 require("./routes")(app)

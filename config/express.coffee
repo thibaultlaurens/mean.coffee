@@ -1,67 +1,73 @@
 path = require 'path'
 config = require './config'
 express = require 'express'
-mongoStore = require('connect-mongo')(express)
+
+# express midlewares
 helmet = require 'helmet'
 multipart = require 'connect-multiparty'
+session = require 'express-session'
+sessionStore = require('connect-mongo')({session: session})
+compress = require 'compression'
+bodyParser = require 'body-parser'
+favicon = require 'static-favicon'
+cookieParser = require 'cookie-parser'
+methodOverride = require 'method-override'
+serveStatic = require 'serve-static'
+errorHandler = require 'errorhandler'
 
-module.exports = (app, passport, db, logger, root_path) ->
+module.exports = (passport, db, logger, root_path) ->
+
+  app = express()
 
   app.logger = logger
 
-  # custom session middleware
-  sessionMiddleware =  express.session
+  # set port, routes, models and config paths
+  app.set 'port', config.PORT
+  app.set 'routes', root_path + '/routes/'
+  app.set 'models', root_path + '/data_access/models/'
+  app.set 'config', config
+
+  # security headers
+  app.use helmet.xframe()
+  app.use helmet.iexss()
+  app.use helmet.contentTypeOptions()
+  app.use helmet.cacheControl()
+
+  # ensure all assets and data are compressed - above static
+  app.use compress()
+
+  # setting the favicon and static folder
+  app.use favicon path.join root_path, '/_public/assets/favicon.ico'
+  app.use serveStatic path.join root_path, '_public'
+
+  # cookie parser - above session
+  app.use cookieParser config.COOKIE_SECRET
+
+  # body parsing middleware - above methodOverride()
+  app.use bodyParser()
+  app.use multipart()
+  app.use methodOverride()
+
+  # session store (mongodb)
+  app.use session
     secret: config.COOKIE_SECRET
-    cookie:
-      httpOnly: true
-      secure: true
-    store: new mongoStore
+    maxAge: 60 * 60 * 1000
+    store: new sessionStore
       db: db.connection.db
+      clear_interval: 60 * 60
 
+  # let passport manage sessions
+  app.use passport.initialize()
+  app.use passport.session()
 
-  app.configure ->
+  # bootstrap routes
+  require("../routes")(app)
 
-    # set port, routes, models and config paths
-    app.set 'port', config.PORT
-    app.set 'routes', root_path + '/routes/'
-    app.set 'models', root_path + '/data_access/models/'
-    app.set 'config', config
+  app.use (err, req, res, next) ->
+    logger.error err.toString()
+    next()
 
-    # security headers
-    app.use helmet.xframe()
-    app.use helmet.iexss()
-    app.use helmet.contentTypeOptions()
-    app.use helmet.cacheControl()
+  if config.ENV is 'development' then  app.use errorHandler { dumpExceptions: true, showStack: true }
 
-    # cookie parser - above session
-    app.use express.cookieParser()
+  return app
 
-    # body parsing middleware - above methodOverride()
-    app.use express.urlencoded()
-    app.use express.json()
-    app.use multipart()
-    app.use express.methodOverride()
-
-    # unauthenticated session only
-    app.use (req, res, next) ->
-      if req.headers.authorization then return next()
-      return sessionMiddleware req, res, next
-
-    # authenticated session managed by passport
-    app.use passport.initialize()
-    app.use passport.session()
-
-    app.use app.router
-
-    # ensure all assets and data are compressed - above express.static
-    app.use express.compress()
-
-    # setting the favicon and static folder
-    app.use express.favicon path.join root_path, '/_public/assets/favicon.ico'
-    app.use express.static path.join root_path, '_public'
-
-    app.use (err, req, res, next) ->
-      logger.error err.toString()
-      next()
-
-    if config.ENV is 'development' then  app.use express.errorHandler { dumpExceptions: true, showStack: true }
