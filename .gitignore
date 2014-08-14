@@ -1,10 +1,21 @@
-.DS_Store
+*/*.iml
+*.iml
 .idea
-*.log
+*/log/*
+log/
+logs/
+tmp/
+.log
+#OSX
+.DS_Store
+nohup.out
 
-node_modules
+*.xml
+coverage/
+node_modules/
+build/
+npm-debug.log
+bower_components/
 _public
 app/components
-
-
 
