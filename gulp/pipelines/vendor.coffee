@@ -1,4 +1,4 @@
-dep = require '../extensions/browserify'
+dep = require 'browserify-shim-dependency'
 bower = '../../app/components/'
 
 $ = new dep "#{bower}jquery/dist/jquery.js", '$'
@@ -23,6 +23,5 @@ angularDeps = [
 ].map (d) ->
   new dep("#{bower}angular-#{d}/angular-#{d}.js", "angular-#{d}").dependsOn angular
 
-dependencies = _.extends [deps.concat(angularUi).concat(angularDeps)].map (b) -> b.bfy()
 
-module.exports = dependencies
+module.exports = dep.combine deps.concat(angularUi).concat(angularDeps)
