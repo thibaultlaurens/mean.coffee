@@ -1,7 +1,7 @@
 describe 'browserfy extensions', ->
   describe 'dependency', ->
     beforeEach ->
-      dep = require '../../../gulp/extensions/browserfy'
+      dep = require '../../../gulp/extensions/browserify'
       @subject = dep
 
     it 'exists', ->

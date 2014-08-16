@@ -1,3 +1,3 @@
 require 'should'
 require '../../gulp/globals'
-require './extensions/browserfy_spec'
+require './extensions/browserify_spec'
