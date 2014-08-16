@@ -56,4 +56,24 @@ describe 'browserfy extensions', ->
           obj = copy.bfy()
           obj[@obj.location].depends = _.extends [@obj2.bfy(), @obj3.bfy()]
           @obj.dependsOn(@deps).bfy().should.be.eql obj
-          console.log JSON.stringify(@obj.bfy())
+#          console.log JSON.stringify(@obj.bfy())
+
+
+      describe 'full blown example', ->
+        it 'works', ->
+          dep = @subject
+          bower = '../../app/components/'
+          $ = new dep "#{bower}jquery/dist/jquery.js", '$'
+          bootstrap = new dep "#{bower}bootstrap/dist/bootstrap.js", 'bootstrap'
+          angular = new dep("#{bower}angular/angular.js", 'angular').dependsOn $
+
+          dependencies = _.extends [$, bootstrap, angular].map (b) -> b.bfy()
+          str = """
+            {
+              "#{$.location}" : {"exports" :  "#{$.exports}" },
+              "#{bootstrap.location}" : {"exports" : "#{bootstrap.exports}" },
+              "#{angular.location}" : {"exports" : "#{angular.exports}", "depends" : { "#{$.location}" : {"exports" : "#{$.exports}" }}}
+            }
+            """
+#          console.log str
+          dependencies.should.be.eql JSON.parse str
