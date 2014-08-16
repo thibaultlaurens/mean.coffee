@@ -1,4 +1,4 @@
-dep = require '../dependency'
+dep = require '../extensions/browserfy'
 bower = '../../app/components/'
 
 $ = new dep "#{bower}jquery/dist/jquery.js", '$'
