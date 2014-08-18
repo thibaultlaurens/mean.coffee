@@ -13,7 +13,7 @@
     "npm": "1.4.x"
   },
   "scripts": {
-    "start": "cgulp server;cgulp",
+    "start": "cgulp server",
     "gulp": "gulp dev --require coffee-script/register",
     "gulp-build": "gulp build --require coffee-script/register",
     "test": "mocha --compilers coffee:coffee-script/register --reporter spec spec/gulp/specs.coffee",

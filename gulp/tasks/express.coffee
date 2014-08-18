@@ -2,8 +2,7 @@ gulp = require 'gulp'
 #server = require 'gulp-express'
 shell = require 'gulp-shell'
 
-gulp.task "server", shell.task ['coffee server.coffee']
-
+gulp.task "server", [shell.task ['coffee server.coffee'],"browserSync"]
 
 # gulp.task 'server', ['default'], ->
 #   #start the server at the beginning of the task

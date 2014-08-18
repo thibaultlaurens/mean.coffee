@@ -19,3 +19,5 @@ bower_components/
 _public
 app/components
 dist/
+nginx/var/
+nginx/**/

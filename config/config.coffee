@@ -1,6 +1,6 @@
 base =
   ENV: process.env.NODE_ENV || 'development'
-  PORT: process.env.PORT || 3000
+  PORT: process.env.PORT || 9999
   LOGPATH: "mean.coffee.log"
   COOKIE_SECRET: "thisisthesecretforthesession"
   DBURLTEST: "mongodb://localhost/meandb_test"
@@ -21,6 +21,3 @@ module.exports = do ->
     when 'development' then return mergeConfig(dev)
     when 'production' then return mergeConfig(prod)
     else return mergeConfig(dev)
-
-
-
