@@ -39,7 +39,7 @@
     "passport-http": "0.2.x",
     "password-hash": "1.2.x",
     "serve-static": "1.0.x",
-    "static-favicon": "1.0.x",
+    "serve-favicon": "2.0.x",
     "winston": "0.7.x"
   },
   "devDependencies": {
