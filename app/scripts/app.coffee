@@ -1,3 +1,8 @@
 'use strict'
 
-meanApp = angular.module 'meanApp', ['ngCookies', 'ngResource', 'ngRoute', 'ui.bootstrap']
+angular = require 'angular'
+
+app = angular.module 'meanApp', ['ngCookies', 'ngResource', 'ngRoute', 'ui.bootstrap']
+app = require('./config.coffee')(app)
+
+module.exports = app

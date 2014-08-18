@@ -1,5 +1,6 @@
+app = require = '../app'
 #Global service for global variables
-meanApp.factory 'Global', [
+app.factory 'Global', [
 
   () ->
     _this = this
@@ -7,5 +8,4 @@ meanApp.factory 'Global', [
       user: window.user
       authenticated: !! window.user
     return _this._data
-
 ]
