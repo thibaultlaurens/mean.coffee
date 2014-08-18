@@ -13,7 +13,7 @@
     "npm": "1.4.x"
   },
   "scripts": {
-    "start": "coffee server.coffee",
+    "start": "cgulp server;cgulp",
     "gulp": "gulp dev --require coffee-script/register",
     "gulp-build": "gulp build --require coffee-script/register",
     "test": "mocha --compilers coffee:coffee-script/register --reporter spec spec/gulp/specs.coffee",
@@ -32,6 +32,7 @@
     "express-session": "1.0.x",
     "forever": "0.11.x",
     "gulp-changed": "^1.0.0",
+    "gulp-express": "0.0.9",
     "gulp-help": "^0.1.11",
     "gulp-webpack": "^0.3.0",
     "helmet": "0.2.x",
@@ -62,6 +63,7 @@
     "gulp-imagemin": "0.3.x",
     "gulp-minify-css": "0.3.x",
     "gulp-rimraf": "^0.1.0",
+    "gulp-shell": "^0.2.9",
     "gulp-size": "0.3.x",
     "gulp-uglify": "0.2.x",
     "gulp-util": "2.2.x",
