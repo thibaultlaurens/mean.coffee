@@ -16,12 +16,11 @@ mergeConfig = (config) ->
     base[key] = val
   base
 
-module.exports = ( ->
+module.exports = do ->
   switch base.ENV
     when 'development' then return mergeConfig(dev)
     when 'production' then return mergeConfig(prod)
     else return mergeConfig(dev)
-)()
 
 
 

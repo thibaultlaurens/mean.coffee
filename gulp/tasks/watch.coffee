@@ -4,8 +4,11 @@
 #     that change within the directory it's serving from
 #
 gulp = require 'gulp'
+path = require '../paths'
+
+gulp.task 'setWatch', ->
+  global.isWatching = true
 
 gulp.task 'watch', ['setWatch','browserSync'], ->
-  gulp.watch 'src/sass/**', ['sass']
-  gulp.watch 'src/images/**', ['images']
-  gulp.watch 'src/htdocs/**', ['markup']
+  gulp.watch [path.scripts,path.styles,path.bower,path.assets], ['webpack']
+  gulp.watch path.html, ['html']

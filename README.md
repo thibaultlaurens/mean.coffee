@@ -22,7 +22,7 @@ inspired by http://mean.io/
 
 - Run gulp
     - npm run gulp (for dev)
-    - npm run gulp-build (for prod)
+    - npm run gulp-prod (for prod)
 
 
 ### Differences compared to mean.io:
