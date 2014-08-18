@@ -1,6 +1,6 @@
 base =
   ENV: process.env.NODE_ENV || 'development'
-  PORT: process.env.PORT || 9999
+  PORT: process.env.PORT || 4000
   LOGPATH: "mean.coffee.log"
   COOKIE_SECRET: "thisisthesecretforthesession"
   DBURLTEST: "mongodb://localhost/meandb_test"

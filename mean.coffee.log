@@ -16,3 +16,35 @@
 {"level":"info","message":"Logger configured","timestamp":"2014-08-18T04:46:51.441Z"}
 {"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T04:46:51.711Z"}
 {"level":"info","message":"mean.coffee server listening on port 3000 in development mode","timestamp":"2014-08-18T04:46:51.979Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:24:56.048Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:24:56.504Z"}
+{"level":"info","message":"mean.coffee server listening on port 9999 in development mode","timestamp":"2014-08-18T19:24:56.909Z"}
+{"level":"error","message":"Error: ENOENT, open '/Users/nem/code/github/rmaps/node/mean.coffee/_public/assets/favicon.ico'","timestamp":"2014-08-18T19:25:05.497Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:44:56.956Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:44:57.308Z"}
+{"level":"info","message":"mean.coffee server listening on port 3000 in development mode","timestamp":"2014-08-18T19:44:57.585Z"}
+{"level":"error","message":"Error: ENOENT, open '/Users/nem/code/github/rmaps/node/mean.coffee/_public/assets/favicon.ico'","timestamp":"2014-08-18T19:45:09.469Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:45:46.929Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:45:47.207Z"}
+{"level":"info","message":"mean.coffee server listening on port 3000 in development mode","timestamp":"2014-08-18T19:45:47.477Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:46:05.277Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:46:05.631Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:46:05.915Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:48:42.257Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:48:42.541Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:48:42.807Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:48:49.090Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:48:49.365Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:48:49.629Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:48:54.631Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:48:54.905Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:48:55.182Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:48:59.179Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:48:59.522Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:48:59.814Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:50:25.188Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:50:25.546Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:50:25.814Z"}
+{"level":"info","message":"Logger configured","timestamp":"2014-08-18T19:53:08.529Z"}
+{"level":"info","message":"mongo connected to mongodb://localhost/meandb","timestamp":"2014-08-18T19:53:08.899Z"}
+{"level":"info","message":"mean.coffee server listening on port 4000 in development mode","timestamp":"2014-08-18T19:53:09.180Z"}

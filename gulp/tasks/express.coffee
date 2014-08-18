@@ -1,16 +1,12 @@
 gulp = require 'gulp'
 #server = require 'gulp-express'
 shell = require 'gulp-shell'
+nodemon = require 'gulp-nodemon'
 
-gulp.task "server", [shell.task ['coffee server.coffee'],"browserSync"]
+# gulp.task "express", shell.task ['coffee server.coffee']
 
-# gulp.task 'server', ['default'], ->
-#   #start the server at the beginning of the task
-#   server.run file: 'coffee server.coffee'
-#
-#   #restart the server when file changes
-#   gulp.watch ['_public/**'], server.notify
-#   gulp.watch [
-#     'server.coffee'
-#     'routes/**/*.coffee'
-#   ], [server.run]
+gulp.task "express", ->
+  nodemon(script: "server.coffee")
+
+gulp.task "server", ["browserSync"]
+gulp.task 's', ['server']
