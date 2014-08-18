@@ -59,6 +59,10 @@ run_path="$this_path"/var/run
 
 mkdir -p "$log_path";
 mkdir -p "$run_path";
+mkdir -p "$run_path"/nginx/client_body_temp;
+mkdir -p "$run_path"/nginx/proxy_temp;
+mkdir -p "$run_path"/nginx/uwsgi_temp;
+mkdir -p "$run_path"/nginx/scgi_temp;
 
 ccopt="--with-cc-opt=${cc_opt}"
 echo $ccopt
@@ -136,4 +140,7 @@ fi
 make install
 
 mkdir "$nginx_binary_drop_dir"/bin;
-ln -s "$nginx_binary_drop_dir"/sbin/nginx "$nginx_binary_drop_dir"/bin/nginx
+ln -s "$nginx_binary_drop_dir"/sbin/nginx "$nginx_binary_drop_dir"/bin/nginx;
+
+mv "$nginx_binary_drop_dir"/conf/nginx.conf "$nginx_binary_drop_dir"/conf/orig_nginx.conf;
+cp -f "$this_path"/ournginx.conf "$nginx_binary_drop_dir"/conf/nginx.conf
