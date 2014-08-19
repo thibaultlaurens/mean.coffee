@@ -1,8 +1,8 @@
-config = require '../config/config'
+config = require '../../config/config'
 mongoose = require 'mongoose'
 
-require('../models')()
-user_service = require '../services/service.user'
+require('../../models')()
+user_service = require '../../services/service.user'
 
 should = require('chai').should()
 
@@ -43,5 +43,3 @@ describe "Users", () ->
       user.should.be.an 'object'
       user.id.should.equal currentUser.id
       done()
-
-

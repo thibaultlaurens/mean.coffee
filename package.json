@@ -13,10 +13,12 @@
     "npm": "1.4.x"
   },
   "scripts": {
-    "start": "cgulp server",
+    "start": "cgulp s",
     "gulp": "cgulp",
     "gulp-build": "cgulp build",
-    "test": "mocha --compilers coffee:coffee-script/register --reporter spec spec/gulp/specs.coffee",
+    "test-backend": "mocha --compilers coffee:coffee-script/register --reporter spec spec/backend/*",
+    "test-gulp": "mocha --compilers coffee:coffee-script/register --reporter spec spec/gulp/*;",
+    "test": "npm run test-backend; npm run test-gulp;",
     "postinstall": "bower install"
   },
   "dependencies": {

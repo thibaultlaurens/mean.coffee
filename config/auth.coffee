@@ -6,9 +6,3 @@ module.exports =
     next()
 
   basic: passport.authenticate('basic', { session: false })
-
-
-
-
-
-
