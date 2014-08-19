@@ -5,7 +5,7 @@ coffee = require 'gulp-coffee'
 watch = require 'gulp-watch'
 concat = require 'gulp-concat'
 imagemin = require 'gulp-imagemin'
-clean = require 'gulp-clean'
+rimraf = require 'gulp-rimraf'
 flatten = require 'gulp-flatten'
 minifycss = require 'gulp-minify-css'
 size = require 'gulp-size'
@@ -87,7 +87,7 @@ gulp.task 'watch', () ->
 
 gulp.task 'clean', () ->
   gulp.src('_public', { read: false })
-    .pipe(clean())
+    .pipe(rimraf())
 
 
 gulp.task 'default', ['styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
