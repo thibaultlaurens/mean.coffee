@@ -9,9 +9,8 @@
     "angular-mocks": "~1.2.16",
     "angular-bootstrap": "~0.10.0",
     "angular-ui-utils": "~0.1.1",
-    "angular-route": "~1.2.16"
-  },
-  "devDependencies": {
-    "lodash": "~2.4.1"
+    "angular-route": "~1.2.16",
+    "lodash": "~2.4.1",
+    "jquery": "~2.1.1"
   }
 }

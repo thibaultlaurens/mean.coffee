@@ -3,7 +3,8 @@ help = require('gulp-help')(gulp)
 #help = require 'gulp-task-listing'
 clean = require 'gulp-rimraf'
 
-gulp.task 'default', ['clean','build','watch']
+gulp.task 'default', ['clean'], ->
+  gulp.start 'build','images','watch'
 
 #gulp.task('help', help.withFilters(/:/))
 

@@ -1,12 +1,17 @@
 webpack = require 'webpack'
 
 module.exports =
+  verbose:true
+  output:
+    filename: 'js/bundle.js'
   resolve:
-    modulesDirectories: ['bower_components']#omitting node_modules on purpose (for backend)
+    modulesDirectories: ['bower_components']
+  plugins: [
+     new webpack.ResolverPlugin(
+          new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"]))
+    ]
   module:
     loaders: [
-      # Exports Angular
-      { test: /[\/]angular\.js$/, loader: "exports?angular" }
       { test: /\.css$/, loader: 'style!css' }
       { test: /\.styl$/, loader: 'style!css!stylus' }
       { test: /\.scss$/, loader: "style!css!sass?outputStyle=expanded"}
@@ -18,7 +23,3 @@ module.exports =
       { test: /\.eot$/, loader: "file?prefix=font/" }
       { test: /\.svg$/, loader: "file?prefix=font/" }
     ]
-    plugins:
-       new webpack.ResolverPlugin([
-            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-        ])

@@ -8,5 +8,5 @@ nodemon = require 'gulp-nodemon'
 gulp.task "express", ->
   nodemon(script: "server.coffee")
 
-gulp.task "server", ["browserSync"]
+gulp.task "server", ['default']
 gulp.task 's', ['server']

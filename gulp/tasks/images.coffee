@@ -7,7 +7,7 @@ dest = './_public/assets'
 gulp.task 'images', ->
   # Ignore unchanged files
   # Optimize
-  gulp.src('./src/assets/**')
+  gulp.src('app/assets/**')
   .pipe(changed(dest))
   .pipe(imagemin())
   .pipe gulp.dest(dest)

@@ -1,7 +1,5 @@
-app = require = '../app'
+app = require '../app.coffee'
 
-app.controller 'MainController', ['$scope', 'Global', ($scope, Global) ->
-
+module.exports = app.controller 'MainController', ['$scope', 'Global', ($scope, Global) ->
   $scope.global = Global
-
 ]

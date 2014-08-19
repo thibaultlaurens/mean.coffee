@@ -1,5 +1,5 @@
 module.exports =
-  scripts: 'app/scripts/**/*.coffee'
+  scripts: 'app/scripts/**'
   styles: 'app/styles/**/*.css'
   bower: 'bower_components'
   html: 'app/html/**/*.html'
