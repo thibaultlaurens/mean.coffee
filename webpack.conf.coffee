@@ -1,14 +1,19 @@
 webpack = require 'webpack'
+HtmlWebpackPlugin = require 'html-webpack-plugin'
 
 module.exports =
   verbose:true
   output:
-    filename: 'js/bundle.js'
+    # filename: 'js/bundle.js'
+    filename: "js/[name].wp.js"
+    chunkFilename: "js/[id].wp.js"
   resolve:
     modulesDirectories: ['bower_components']
   plugins: [
-     new webpack.ResolverPlugin(
-          new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"]))
+    new webpack.ResolverPlugin(
+      new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"]))
+    new HtmlWebpackPlugin
+      template: 'app/html/index.html'
     ]
   module:
     loaders: [
