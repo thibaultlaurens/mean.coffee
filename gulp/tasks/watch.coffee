@@ -10,5 +10,5 @@ gulp.task 'setWatch', ->
   global.isWatching = true
 
 gulp.task 'watch', ['setWatch','browserSync'], ->
-  gulp.watch [path.scripts,path.styles,path.bower,path.assets], ['webpack','build']
+  gulp.watch [path.scripts,path.styles,path.bower,path.assets], ['build']
   gulp.watch path.html, ['html']

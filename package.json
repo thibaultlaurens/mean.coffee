@@ -14,8 +14,8 @@
   },
   "scripts": {
     "start": "cgulp server",
-    "gulp": "gulp dev --require coffee-script/register",
-    "gulp-build": "gulp build --require coffee-script/register",
+    "gulp": "cgulp",
+    "gulp-build": "cgulp build",
     "test": "mocha --compilers coffee:coffee-script/register --reporter spec spec/gulp/specs.coffee",
     "postinstall": "bower install"
   },

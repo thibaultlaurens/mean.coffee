@@ -1,5 +1,4 @@
 'use strict'
-
 window.$ = window.jQuery = require 'jquery'
 require 'angular'
 require 'angular-route'
@@ -7,7 +6,6 @@ require 'angular-cookies'
 require 'angular-resource'
 require 'angular-route'
 require 'angular-bootstrap/ui-bootstrap-tpls.js' #angular-bootstrap
-
 _ = require 'lodash'
 
 require '../styles/common.css'
