@@ -21,3 +21,4 @@ app/components
 dist/
 nginx/var/
 nginx/**/
+mean.coffee.log

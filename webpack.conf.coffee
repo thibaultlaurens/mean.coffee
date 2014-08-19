@@ -4,7 +4,7 @@ HtmlWebpackPlugin = require 'html-webpack-plugin'
 module.exports =
   watch:true
   verbose:true
-  devtool: "#inline-source-map"#"#source-map"
+  devtool: '#source-map'#'#inline-source-map'
   output:
     # filename: 'js/bundle.js'
     filename: "js/[name].wp.js"
