@@ -57,5 +57,5 @@ inspired by http://mean.io/
 - procfile for heroku deployment
 - nginx-buildpack for Heroku see above
 - make nginx installer work on more than OSX
-- mocha frontend tests with or without web-pack
+- mocha/karma frontend tests with or without web-pack
 - npm run gulp-prod (for prod)
