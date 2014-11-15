@@ -1,45 +1,76 @@
-gulp = require 'gulp'
-gutil = require 'gulp-util'
-uglify = require 'gulp-uglify'
-coffee = require 'gulp-coffee'
-watch = require 'gulp-watch'
-concat = require 'gulp-concat'
-imagemin = require 'gulp-imagemin'
+gulp              = require 'gulp'
+sass              = require 'gulp-sass'
+coffee            = require 'gulp-coffee'
+concat            = require 'gulp-concat'
+gutil             = require 'gulp-util'
+rename            = require 'gulp-rename'
+clean             = require 'gulp-clean'
+gulpif            = require 'gulp-if'
+
+# Minification
+uglify            = require 'gulp-uglify'
+minifyHTML        = require 'gulp-minify-html'
+minifyCSS         = require 'gulp-minify-css'
+imagemin          = require 'gulp-imagemin'
+pngcrush          = require 'imagemin-pngcrush'
+
+# Angular Helpers
+ngAnnotate        = require 'gulp-ng-annotate'
+htmlify           = require 'gulp-angular-htmlify'
+
 rimraf = require 'gulp-rimraf'
 flatten = require 'gulp-flatten'
-minifycss = require 'gulp-minify-css'
 size = require 'gulp-size'
 
-
 path =
-  scripts: 'app/scripts/**/*.coffee'
-  styles: 'app/styles/**/*.css'
-  bower: 'app/components'
-  html: 'app/html/**/*.html'
-  assets: 'app/assets/*'
-
+  app:
+    scripts: ["app/scripts/*.{coffee,js}", "app/scripts/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
+    styles: "app/styles/**/*.{scss,sass,css}" # css and scss files
+    bower: 'app/components'
+    templates: "app/templates/**/*.{html,jade,md,markdown}" # All html, jade, and markdown files used as templates within the app
+    images: "app/images/*.{png,jpg,jpeg,gif}" # All image files
+    static: "app/static/*.*" # Any other static content such as the favicon
 
 gulp.task 'scripts', () ->
-  gulp.src(path.scripts)
-    .pipe(coffee({bare: true}).on 'error', gutil.log)
-    .pipe(concat 'app.min.js')
+  coffeestream = coffee({bare: true})
+  coffeestream.on("error", gutil.log)
+  gulp.src path.app.scripts
+    .pipe(gulpif(/[.]coffee$/, coffeestream))
+    .pipe(ngAnnotate())
+    .pipe(concat("app.js"))
     .pipe(size())
-    .pipe(gulp.dest '_public/js')
-
-gulp.task 'uglyscripts', () ->
-  gulp.src(path.scripts)
-    .pipe(coffee({bare: true}).on 'error', gutil.log)
-    .pipe(concat 'app.min.js')
+    .pipe(gulp.dest("_public/js"))
     .pipe(uglify())
+    .pipe(rename({extname: ".min.js"}))
     .pipe(size())
-    .pipe(gulp.dest '_public/js')
+    .pipe(gulp.dest "_public/js")
 
-gulp.task 'styles', () ->
-  gulp.src(path.styles)
-    .pipe(concat 'app.min.css')
-    .pipe(minifycss())
+gulp.task "styles", ->
+  sassstream = sass({
+      sourcemap: false,
+      unixNewlines: true,
+      style: 'nested',
+      debugInfo: false,
+      quiet: false,
+      lineNumbers: true,
+      bundleExec: true
+    })
+  sassstream.on("error", gutil.log)
+
+  gulp.src path.app.styles
+    .pipe(gulpif([.]sass|scss$/, sassstream))
+    .pipe(concat 'app.css')
     .pipe(size())
-    .pipe(gulp.dest '_public/css')
+    .pipe(gulp.dest "_public/css")
+    .pipe(minifyCSS())
+    .pipe(rename({extname: ".min.css"}))
+    .pipe(size())
+    .pipe(gulp.dest "_public/css")
+
+gulp.task 'templates', ->
+  gulp.src path.app.templates
+    .pipe(size())
+    .pipe(gulp.dest('_public'))
 
 gulp.task 'jquery', () ->
   gulp.src('app/components/jquery/jquery.min.js')
@@ -60,13 +91,8 @@ gulp.task 'bowercss', () ->
     .pipe(size())
     .pipe(gulp.dest('_public/css'))
 
-gulp.task 'html', () ->
-  gulp.src(path.html)
-    .pipe(size())
-    .pipe(gulp.dest '_public')
-
 gulp.task 'assets', () ->
-  gulp.src(path.assets)
+  gulp.src(path.app.images)
     .pipe(imagemin({optimizationLevel: 5}))
     .pipe(size())
     .pipe(gulp.dest '_public/assets')
@@ -79,11 +105,11 @@ gulp.task 'ngroute', () ->
   .pipe(gulp.dest('_public/js'))
 
 gulp.task 'watch', () ->
-  gulp.watch path.scripts, ['scripts']
-  gulp.watch path.styles, ['styles']
-  gulp.watch path.bower, ['bowerjs']
-  gulp.watch path.html, ['html']
-  gulp.watch path.assets, ['assets']
+  gulp.watch path.app.scripts, ['scripts']
+  gulp.watch path.app.styles, ['styles']
+  gulp.watch path.app.bower, ['bowerjs']
+  gulp.watch path.app.app.templates, ['templates']
+  gulp.watch path.app.images, ['images']
 
 gulp.task 'clean', () ->
   gulp.src('_public', { read: false })

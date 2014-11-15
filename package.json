@@ -30,6 +30,7 @@
     "express": "4.0.x",
     "express-session": "1.0.x",
     "forever": "0.11.x",
+    "gulp-if": "^1.2.5",
     "helmet": "0.2.x",
     "memwatch": "0.2.x",
     "method-override": "1.0.x",
@@ -38,8 +39,8 @@
     "passport": "0.2.x",
     "passport-http": "0.2.x",
     "password-hash": "1.2.x",
-    "serve-static": "1.0.x",
     "serve-favicon": "2.0.x",
+    "serve-static": "1.0.x",
     "winston": "0.7.x"
   },
   "devDependencies": {
