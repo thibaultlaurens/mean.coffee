@@ -58,7 +58,7 @@ gulp.task "styles", ->
   sassstream.on("error", gutil.log)
 
   gulp.src path.app.styles
-    .pipe(gulpif([.]sass|scss$/, sassstream))
+    .pipe(gulpif(/[.]sass|scss$/, sassstream))
     .pipe(concat 'app.css')
     .pipe(size())
     .pipe(gulp.dest "_public/css")
@@ -116,7 +116,7 @@ gulp.task 'clean', () ->
     .pipe(rimraf())
 
 
-gulp.task 'default', ['styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
+gulp.task 'default', ['scripts', 'styles', 'templates', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
 
 gulp.task 'dev', ['default', 'scripts', 'watch']
 
