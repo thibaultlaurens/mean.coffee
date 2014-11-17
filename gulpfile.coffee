@@ -107,7 +107,7 @@ gulp.task 'ngroute', () ->
 gulp.task 'watch', () ->
   gulp.watch path.app.scripts, ['scripts']
   gulp.watch path.app.styles, ['styles']
-  gulp.watch path.app.bower, ['bowerjs']
+  gulp.watch path.app.bower, ['bowerjs', 'bowercss']
   gulp.watch path.app.app.templates, ['templates']
   gulp.watch path.app.images, ['images']
 
@@ -118,6 +118,6 @@ gulp.task 'clean', () ->
 
 gulp.task 'default', ['scripts', 'styles', 'templates', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
 
-gulp.task 'dev', ['default', 'scripts', 'watch']
+gulp.task 'dev', ['default', 'watch']
 
-gulp.task 'build', ['clean', 'default', 'uglyscripts']
+gulp.task 'build', ['clean', 'default']
