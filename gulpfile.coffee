@@ -28,7 +28,7 @@ path =
     styles: "app/styles/**/*.{scss,sass,css}" # css and scss files
     bower: 'app/components'
     templates: "app/templates/**/*.{html,jade,md,markdown}" # All html, jade, and markdown files used as templates within the app
-    images: "app/images/*.{png,jpg,jpeg,gif}" # All image files
+    images: "app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
     static: "app/static/*.*" # Any other static content such as the favicon
 
 gulp.task 'scripts', () ->
@@ -108,7 +108,7 @@ gulp.task 'watch', () ->
   gulp.watch path.app.scripts, ['scripts']
   gulp.watch path.app.styles, ['styles']
   gulp.watch path.app.bower, ['bowerjs', 'bowercss']
-  gulp.watch path.app.app.templates, ['templates']
+  gulp.watch path.app.templates, ['templates']
   gulp.watch path.app.images, ['images']
 
 gulp.task 'clean', () ->
