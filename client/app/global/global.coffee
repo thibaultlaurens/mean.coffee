@@ -1,6 +1,5 @@
 #Global service for global variables
 meanApp.factory 'Global', [
-
   () ->
     _this = this
     _this._data =

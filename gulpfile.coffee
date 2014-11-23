@@ -25,8 +25,8 @@ livereload        = require 'gulp-livereload'
 
 path =
   app:
-    scripts: ["client/app/scripts/*.{coffee,js}", "client/app/scripts/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
-    styles: "client/app/styles/**/*.{scss,sass,css}" # css and scss files
+    scripts: ["client/app/**/*.{coffee,js}", "client/app/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
+    styles: "client/app/**/*.{scss,sass,css}" # css and scss files
     bower: 'client/components'
     templates: "client/app/**/*.{html,jade}" # All html, jade, and markdown files used as templates within the app
     images: "client/app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
@@ -77,12 +77,12 @@ gulp.task 'templates', ->
     .pipe(livereload())
 
 gulp.task 'jquery', () ->
-  gulp.src('client/components/jquery/jquery.min.js')
+  gulp.src('client/components/jquery/dist/jquery.min.js')
     .pipe(size())
     .pipe(gulp.dest('www/js'))
 
 gulp.task 'bowerjs', () ->
-  gulp.src('client/components/**/*.min.js', !'client/components/jquery/jquery.min.js')
+  gulp.src('client/components/**/*.min.js', !'client/components/jquery/dist/jquery.min.js')
     .pipe(flatten())
     .pipe(concat 'vendor.min.js')
     .pipe(size())
