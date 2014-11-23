@@ -25,12 +25,12 @@ livereload        = require 'gulp-livereload'
 
 path =
   app:
-    scripts: ["app/scripts/*.{coffee,js}", "app/scripts/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
-    styles: "app/styles/**/*.{scss,sass,css}" # css and scss files
-    bower: 'app/components'
-    templates: "app/templates/**/*.{html,jade,md,markdown}" # All html, jade, and markdown files used as templates within the app
-    images: "app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
-    static: "app/static/*.*" # Any other static content such as the favicon
+    scripts: ["client/app/scripts/*.{coffee,js}", "client/app/scripts/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
+    styles: "client/app/styles/**/*.{scss,sass,css}" # css and scss files
+    bower: 'client/components'
+    templates: "client/app/templates/**/*.{html,jade,md,markdown}" # All html, jade, and markdown files used as templates within the app
+    images: "client/app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
+    static: "client/app/static/*.*" # Any other static content such as the favicon
 
 gulp.task 'scripts', () ->
   coffeestream = coffee({bare: true})
@@ -77,19 +77,19 @@ gulp.task 'templates', ->
     .pipe(livereload())
 
 gulp.task 'jquery', () ->
-  gulp.src('app/components/jquery/jquery.min.js')
+  gulp.src('client/components/jquery/jquery.min.js')
     .pipe(size())
     .pipe(gulp.dest('www/js'))
 
 gulp.task 'bowerjs', () ->
-  gulp.src('app/components/**/*.min.js', !'app/components/jquery/jquery.min.js')
+  gulp.src('client/components/**/*.min.js', !'client/components/jquery/jquery.min.js')
     .pipe(flatten())
     .pipe(concat 'vendor.min.js')
     .pipe(size())
     .pipe(gulp.dest('www/js'))
 
 gulp.task 'bowercss', () ->
-  gulp.src('app/components/**/*.min.css')
+  gulp.src('client/components/**/*.min.css')
     .pipe(flatten())
     .pipe(concat 'vendor.min.css')
     .pipe(size())
@@ -103,7 +103,7 @@ gulp.task 'assets', () ->
     .pipe(livereload())
 
 gulp.task 'ngroute', () ->
-  gulp.src('app/components/angular-route/angular-route.min.js')
+  gulp.src('client/components/angular-route/angular-route.min.js')
   .pipe(flatten())
   .pipe(concat 'ngroute.min.js')
   .pipe(size())
