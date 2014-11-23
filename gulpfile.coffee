@@ -28,7 +28,7 @@ path =
     scripts: ["client/app/scripts/*.{coffee,js}", "client/app/scripts/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
     styles: "client/app/styles/**/*.{scss,sass,css}" # css and scss files
     bower: 'client/components'
-    templates: "client/app/templates/**/*.{html,jade,md,markdown}" # All html, jade, and markdown files used as templates within the app
+    templates: "client/app/**/*.{html,jade}" # All html, jade, and markdown files used as templates within the app
     images: "client/app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
     static: "client/app/static/*.*" # Any other static content such as the favicon
 
