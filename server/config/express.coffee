@@ -37,8 +37,8 @@ module.exports = (passport, db, logger, root_path) ->
   app.use compress()
 
   # setting the favicon and static folder
-  app.use favicon path.join root_path, '/www/assets/favicon.ico'
-  app.use serveStatic path.join root_path, 'www'
+  app.use favicon path.join root_path, '../www/assets/favicon.ico'
+  app.use serveStatic path.join root_path, '../www'
 
   # cookie parser - above session
   app.use cookieParser config.COOKIE_SECRET
