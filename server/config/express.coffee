@@ -23,8 +23,8 @@ module.exports = (passport, db, logger, root_path) ->
 
   # set port, routes, models and config paths
   app.set 'port', config.PORT
-  app.set 'routes', root_path + '/routes/'
-  app.set 'models', root_path + '/data_access/models/'
+  app.set 'routes', root_path + '/server/routes/'
+  app.set 'models', root_path + '/server/data_access/models/'
   app.set 'config', config
 
   # security headers
@@ -37,8 +37,8 @@ module.exports = (passport, db, logger, root_path) ->
   app.use compress()
 
   # setting the favicon and static folder
-  app.use favicon path.join root_path, '../www/assets/favicon.ico'
-  app.use serveStatic path.join root_path, '../www'
+  app.use favicon path.join root_path, '/www/assets/favicon.ico'
+  app.use serveStatic path.join root_path, '/www'
 
   # cookie parser - above session
   app.use cookieParser config.COOKIE_SECRET

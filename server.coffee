@@ -6,8 +6,8 @@ if process.env.NODE_ENV == 'production'
   )
 
 # dependencies
-config = require './config/config'
-logger = require './config/logger'
+config = require './server/config/config'
+logger = require './server/config/logger'
 express = require 'express'
 mongoose = require 'mongoose'
 passport = require 'passport'
@@ -45,16 +45,16 @@ mongoose.connection.on 'disconnected', () ->
     logger.error "mongodb disconnect, giving up!"
 
 # bootstrap models
-require('./models')()
+require('./server/models')()
 
 # bootstrap passport config
-require('./config/passport')(passport)
+require('./server/config/passport')(passport)
 
 # express configuration
-app = require("./config/express")(passport, db, logger, root_path)
+app = require("./server/config/express")(passport, db, logger, root_path)
 
 # bootstrap routes
-require("./routes")(app)
+require("./server/routes")(app)
 
 # start the app
 app.listen app.get('port'), ->
