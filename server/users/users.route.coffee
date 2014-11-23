@@ -1,7 +1,6 @@
-logger = require '../config/logger'
-auth = require '../config/auth'
-
-user_service = require '../services/service.user'
+logger       = require '../config/logger'
+auth         = require '../config/auth'
+user_service = require './users.service'
 
 
 module.exports = (app) ->

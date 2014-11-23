@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 BasicStrategy = require('passport-http').BasicStrategy
-User = require("../models/user")
+User = require("../users/users.model")
 
 module.exports = (passport) ->
 

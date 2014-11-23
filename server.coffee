@@ -6,11 +6,13 @@ if process.env.NODE_ENV == 'production'
   )
 
 # dependencies
-config = require './server/config/config'
-logger = require './server/config/logger'
-express = require 'express'
+config   = require './server/config/config'
+logger   = require './server/config/logger'
+express  = require 'express'
 mongoose = require 'mongoose'
 passport = require 'passport'
+glob     = require 'glob'
+path     = require 'path'
 
 root_path = __dirname
 
@@ -45,7 +47,7 @@ mongoose.connection.on 'disconnected', () ->
     logger.error "mongodb disconnect, giving up!"
 
 # bootstrap models
-require('./server/models')()
+# require('./server/models')()
 
 # bootstrap passport config
 require('./server/config/passport')(passport)
@@ -54,7 +56,10 @@ require('./server/config/passport')(passport)
 app = require("./server/config/express")(passport, db, logger, root_path)
 
 # bootstrap routes
-require("./server/routes")(app)
+files = glob.sync 'server/**/*.route.{js,coffee}'
+for file in files when file.lastIndexOf("server/specs/", 0) isnt 0
+  logger.info "Found a route file, #{file} - requiring it"
+  require(path.join __dirname, file)(app)
 
 # start the app
 app.listen app.get('port'), ->
