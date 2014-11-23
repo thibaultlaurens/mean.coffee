@@ -18,9 +18,10 @@ pngcrush          = require 'imagemin-pngcrush'
 ngAnnotate        = require 'gulp-ng-annotate'
 htmlify           = require 'gulp-angular-htmlify'
 
-rimraf = require 'gulp-rimraf'
-flatten = require 'gulp-flatten'
-size = require 'gulp-size'
+rimraf            = require 'gulp-rimraf'
+flatten           = require 'gulp-flatten'
+size              = require 'gulp-size'
+livereload        = require 'gulp-livereload'
 
 path =
   app:
@@ -44,6 +45,7 @@ gulp.task 'scripts', () ->
     .pipe(rename({extname: ".min.js"}))
     .pipe(size())
     .pipe(gulp.dest "_public/js")
+    .pipe(livereload())
 
 gulp.task "styles", ->
   sassstream = sass({
@@ -66,11 +68,13 @@ gulp.task "styles", ->
     .pipe(rename({extname: ".min.css"}))
     .pipe(size())
     .pipe(gulp.dest "_public/css")
+    .pipe(livereload())
 
 gulp.task 'templates', ->
   gulp.src path.app.templates
     .pipe(size())
     .pipe(gulp.dest('_public'))
+    .pipe(livereload())
 
 gulp.task 'jquery', () ->
   gulp.src('app/components/jquery/jquery.min.js')
@@ -96,6 +100,7 @@ gulp.task 'assets', () ->
     .pipe(imagemin({optimizationLevel: 5}))
     .pipe(size())
     .pipe(gulp.dest '_public/assets')
+    .pipe(livereload())
 
 gulp.task 'ngroute', () ->
   gulp.src('app/components/angular-route/angular-route.min.js')
@@ -105,6 +110,7 @@ gulp.task 'ngroute', () ->
   .pipe(gulp.dest('_public/js'))
 
 gulp.task 'watch', () ->
+  livereload.listen()
   gulp.watch path.app.scripts, ['scripts']
   gulp.watch path.app.styles, ['styles']
   gulp.watch path.app.bower, ['bowerjs', 'bowercss']
@@ -116,8 +122,6 @@ gulp.task 'clean', () ->
     .pipe(rimraf())
 
 
-gulp.task 'default', ['scripts', 'styles', 'templates', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
+gulp.task 'default', ['build', 'watch']
 
-gulp.task 'dev', ['default', 'watch']
-
-gulp.task 'build', ['clean', 'default']
+gulp.task 'build', ['clean', 'scripts', 'styles', 'templates', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
