@@ -40,11 +40,11 @@ gulp.task 'scripts', () ->
     .pipe(ngAnnotate())
     .pipe(concat("app.js"))
     .pipe(size())
-    .pipe(gulp.dest("_public/js"))
+    .pipe(gulp.dest("www/js"))
     .pipe(uglify())
     .pipe(rename({extname: ".min.js"}))
     .pipe(size())
-    .pipe(gulp.dest "_public/js")
+    .pipe(gulp.dest "www/js")
     .pipe(livereload())
 
 gulp.task "styles", ->
@@ -63,43 +63,43 @@ gulp.task "styles", ->
     .pipe(gulpif(/[.]sass|scss$/, sassstream))
     .pipe(concat 'app.css')
     .pipe(size())
-    .pipe(gulp.dest "_public/css")
+    .pipe(gulp.dest "www/css")
     .pipe(minifyCSS())
     .pipe(rename({extname: ".min.css"}))
     .pipe(size())
-    .pipe(gulp.dest "_public/css")
+    .pipe(gulp.dest "www/css")
     .pipe(livereload())
 
 gulp.task 'templates', ->
   gulp.src path.app.templates
     .pipe(size())
-    .pipe(gulp.dest('_public'))
+    .pipe(gulp.dest('www'))
     .pipe(livereload())
 
 gulp.task 'jquery', () ->
   gulp.src('app/components/jquery/jquery.min.js')
     .pipe(size())
-    .pipe(gulp.dest('_public/js'))
+    .pipe(gulp.dest('www/js'))
 
 gulp.task 'bowerjs', () ->
   gulp.src('app/components/**/*.min.js', !'app/components/jquery/jquery.min.js')
     .pipe(flatten())
     .pipe(concat 'vendor.min.js')
     .pipe(size())
-    .pipe(gulp.dest('_public/js'))
+    .pipe(gulp.dest('www/js'))
 
 gulp.task 'bowercss', () ->
   gulp.src('app/components/**/*.min.css')
     .pipe(flatten())
     .pipe(concat 'vendor.min.css')
     .pipe(size())
-    .pipe(gulp.dest('_public/css'))
+    .pipe(gulp.dest('www/css'))
 
 gulp.task 'assets', () ->
   gulp.src(path.app.images)
     .pipe(imagemin({optimizationLevel: 5}))
     .pipe(size())
-    .pipe(gulp.dest '_public/assets')
+    .pipe(gulp.dest 'www/assets')
     .pipe(livereload())
 
 gulp.task 'ngroute', () ->
@@ -107,7 +107,7 @@ gulp.task 'ngroute', () ->
   .pipe(flatten())
   .pipe(concat 'ngroute.min.js')
   .pipe(size())
-  .pipe(gulp.dest('_public/js'))
+  .pipe(gulp.dest('www/js'))
 
 gulp.task 'watch', () ->
   livereload.listen()
@@ -118,7 +118,7 @@ gulp.task 'watch', () ->
   gulp.watch path.app.images, ['images']
 
 gulp.task 'clean', () ->
-  gulp.src('_public', { read: false })
+  gulp.src('www', { read: false })
     .pipe(rimraf())
 
 

@@ -3,8 +3,5 @@
 *.log
 
 node_modules
-_public
+www/
 app/components
-
-
-
