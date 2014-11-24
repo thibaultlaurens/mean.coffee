@@ -18,7 +18,7 @@ pngcrush          = require 'imagemin-pngcrush'
 ngAnnotate        = require 'gulp-ng-annotate'
 htmlify           = require 'gulp-angular-htmlify'
 
-rimraf            = require 'gulp-rimraf'
+del               = require 'del'
 flatten           = require 'gulp-flatten'
 size              = require 'gulp-size'
 livereload        = require 'gulp-livereload'
@@ -32,7 +32,9 @@ path =
     images: "client/app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
     static: "client/app/static/*.*" # Any other static content such as the favicon
 
-gulp.task 'scripts', () ->
+tasks = {}
+
+gulp.task 'scripts', tasks.scripts = () ->
   coffeestream = coffee({bare: true})
   coffeestream.on("error", gutil.log)
   gulp.src path.app.scripts
@@ -46,8 +48,9 @@ gulp.task 'scripts', () ->
     .pipe(size())
     .pipe(gulp.dest "www/js")
     .pipe(livereload())
+gulp.task 'scripts:clean', ['clean'], tasks.scripts
 
-gulp.task "styles", ->
+gulp.task "styles", tasks.styles = ->
   sassstream = sass({
       sourcemap: false,
       unixNewlines: true,
@@ -69,45 +72,52 @@ gulp.task "styles", ->
     .pipe(size())
     .pipe(gulp.dest "www/css")
     .pipe(livereload())
+gulp.task 'styles:clean', ['clean'], tasks.styles
 
-gulp.task 'templates', ->
+gulp.task 'templates', tasks.templates = ->
   gulp.src path.app.templates
     .pipe(size())
     .pipe(gulp.dest('www'))
     .pipe(livereload())
+gulp.task 'templates:clean', ['clean'], tasks.templates
 
-gulp.task 'jquery', () ->
+gulp.task 'jquery', tasks.jquery = ->
   gulp.src('client/components/jquery/dist/jquery.min.js')
     .pipe(size())
     .pipe(gulp.dest('www/js'))
+gulp.task 'jquery:clean', ['clean'], tasks.jquery
 
-gulp.task 'bowerjs', () ->
+gulp.task 'bowerjs', tasks.bowerjs = ->
   gulp.src('client/components/**/*.min.js', !'client/components/jquery/dist/jquery.min.js')
     .pipe(flatten())
     .pipe(concat 'vendor.min.js')
     .pipe(size())
     .pipe(gulp.dest('www/js'))
+gulp.task 'bowerjs:clean', ['clean'], tasks.bowerjs
 
-gulp.task 'bowercss', () ->
+gulp.task 'bowercss', tasks.bowercss = ->
   gulp.src('client/components/**/*.min.css')
     .pipe(flatten())
     .pipe(concat 'vendor.min.css')
     .pipe(size())
     .pipe(gulp.dest('www/css'))
+gulp.task 'bowercss:clean', ['clean'], tasks.bowercss
 
-gulp.task 'assets', () ->
+gulp.task 'assets', tasks.assets = ->
   gulp.src(path.app.images)
     .pipe(imagemin({optimizationLevel: 5}))
     .pipe(size())
     .pipe(gulp.dest 'www/assets')
     .pipe(livereload())
+gulp.task 'assets:clean', ['clean'], tasks.assets
 
-gulp.task 'ngroute', () ->
+gulp.task 'ngroute', tasks.ngroute = ->
   gulp.src('client/components/angular-route/angular-route.min.js')
   .pipe(flatten())
   .pipe(concat 'ngroute.min.js')
   .pipe(size())
   .pipe(gulp.dest('www/js'))
+gulp.task 'ngroute:clean', ['clean'], tasks.ngroute
 
 gulp.task 'watch', () ->
   livereload.listen()
@@ -117,11 +127,9 @@ gulp.task 'watch', () ->
   gulp.watch path.app.templates, ['templates']
   gulp.watch path.app.images, ['images']
 
-gulp.task 'clean', () ->
-  gulp.src('www', { read: false })
-    .pipe(rimraf())
-
+gulp.task 'clean', (cb) ->
+  del(['www/**'], cb)
 
 gulp.task 'default', ['build', 'watch']
 
-gulp.task 'build', ['clean', 'scripts', 'styles', 'templates', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
+gulp.task 'build', ['scripts:clean', 'styles:clean', 'templates:clean', 'jquery:clean', 'bowerjs:clean', 'bowercss:clean', 'assets:clean', 'ngroute:clean']
