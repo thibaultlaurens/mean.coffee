@@ -46,9 +46,6 @@ mongoose.connection.on 'disconnected', () ->
   else
     logger.error "mongodb disconnect, giving up!"
 
-# bootstrap models
-# require('./server/models')()
-
 # bootstrap passport config
 require('./server/config/passport')(passport)
 
@@ -56,12 +53,15 @@ require('./server/config/passport')(passport)
 app = require("./server/config/express")(passport, db, logger, root_path)
 
 # bootstrap routes
-files = glob.sync 'server/**/*.route.{js,coffee}'
-for file in files when file.lastIndexOf("server/specs/", 0) isnt 0
-  logger.info "Found a route file, #{file} - requiring it"
-  require(path.join __dirname, file)(app)
+require('./server/routes')(app)
+
+# bootstrap routes based on *.route.coffee naming
+# files = glob.sync 'server/**/*.route.{js,coffee}'
+# for file in files when file.lastIndexOf("server/specs/", 0) isnt 0
+#   logger.info "Found a route file, #{file} - requiring it"
+#   require(path.join __dirname, file)(app)
 
 # start the app
 app.listen app.get('port'), ->
-  logger.info "mean.coffee server listening on port #{@address().port} in #{config.ENV} mode"
+  logger.info "app server listening on port #{@address().port} in #{config.ENV} mode"
 

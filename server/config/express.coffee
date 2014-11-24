@@ -60,9 +60,6 @@ module.exports = (passport, db, logger, root_path) ->
   app.use passport.initialize()
   app.use passport.session()
 
-  # bootstrap routes
-  # require("../routes")(app)
-
   app.use (err, req, res, next) ->
     logger.error err.toString()
     next()
