@@ -1,3 +1,3 @@
 'use strict'
 
-meanApp = angular.module 'meanApp', ['ngCookies', 'ngResource', 'ngRoute', 'ui.bootstrap']
+meanApp = angular.module 'meanApp', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router']

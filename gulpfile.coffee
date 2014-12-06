@@ -111,14 +111,6 @@ gulp.task 'assets', tasks.assets = ->
     .pipe(livereload())
 gulp.task 'assets:clean', ['clean'], tasks.assets
 
-gulp.task 'ngroute', tasks.ngroute = ->
-  gulp.src('client/components/angular-route/angular-route.min.js')
-  .pipe(flatten())
-  .pipe(concat 'ngroute.min.js')
-  .pipe(size())
-  .pipe(gulp.dest('www/js'))
-gulp.task 'ngroute:clean', ['clean'], tasks.ngroute
-
 gulp.task 'watch', () ->
   livereload.listen()
   gulp.watch path.app.scripts, ['scripts']
@@ -132,4 +124,4 @@ gulp.task 'clean', (cb) ->
 
 gulp.task 'default', ['build', 'watch']
 
-gulp.task 'build', ['scripts:clean', 'styles:clean', 'templates:clean', 'jquery:clean', 'bowerjs:clean', 'bowercss:clean', 'assets:clean', 'ngroute:clean']
+gulp.task 'build', ['scripts:clean', 'styles:clean', 'templates:clean', 'jquery:clean', 'bowerjs:clean', 'bowercss:clean', 'assets:clean']

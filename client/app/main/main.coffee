@@ -1,6 +1,7 @@
-meanApp.config ($routeProvider) ->
-  $routeProvider
-    .when '/',
+meanApp.config ($stateProvider) ->
+  $stateProvider
+    .state 'main',
+      url: ''
       templateUrl: 'main/main.tpl.html'
       controller: 'MainCtrl'
 

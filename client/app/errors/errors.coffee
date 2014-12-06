@@ -1,8 +1,9 @@
-meanApp.config ($routeProvider) ->
-  $routeProvider
-    .when '/500',
+meanApp.config ($stateProvider, $urlRouterProvider) ->
+  $urlRouterProvider.otherwise '/404'
+  $stateProvider
+    .state '500',
+        url: '/500'
         templateUrl: 'errors/500.tpl.html'
-    .when '/404',
+    .state '404',
+        url: '/404'
         templateUrl: 'errors/404.tpl.html'
-    .otherwise
-      redirectTo: '/404'
