@@ -52,6 +52,8 @@ gulp.task 'scripts:clean', ['clean'], tasks.scripts
 
 gulp.task "styles", tasks.styles = ->
   sassstream = sass({
+      errLogToConsole: true,
+      sourceComments: 'normal'
       sourcemap: false,
       unixNewlines: true,
       style: 'nested',
