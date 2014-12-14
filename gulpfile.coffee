@@ -6,6 +6,7 @@ gutil             = require 'gulp-util'
 rename            = require 'gulp-rename'
 clean             = require 'gulp-clean'
 gulpif            = require 'gulp-if'
+karma           = require('karma').server
 
 # Minification
 uglify            = require 'gulp-uglify'
@@ -33,6 +34,12 @@ path =
     static: "client/app/static/*.*" # Any other static content such as the favicon
 
 tasks = {}
+
+gulp.task 'test', (done) ->
+  karma.start
+    configFile: __dirname + '/karma.conf.js'
+    #singleRun: true
+  , done
 
 gulp.task 'scripts', tasks.scripts = () ->
   coffeestream = coffee({bare: true})
