@@ -68,8 +68,12 @@
     "gulp-util": "2.2.x",
     "gulp-watch": "0.6.x",
     "imagemin-pngcrush": "^4.0.0",
-    "mocha": "1.18.x",
+    "mocha": "^2.0.1",
     "run-sequence": "^1.0.2",
-    "supertest": "0.11.x"
+    "supertest": "0.11.x",
+    "karma": "^0.12.28",
+    "karma-mocha": "^0.1.10",
+    "karma-chai": "^0.1.0",
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }
