@@ -6,11 +6,13 @@ if process.env.NODE_ENV == 'production'
   )
 
 # dependencies
-config = require './config/config'
-logger = require './config/logger'
-express = require 'express'
+config   = require './server/config/config'
+logger   = require './server/config/logger'
+express  = require 'express'
 mongoose = require 'mongoose'
 passport = require 'passport'
+glob     = require 'glob'
+path     = require 'path'
 
 root_path = __dirname
 
@@ -44,19 +46,23 @@ mongoose.connection.on 'disconnected', () ->
   else
     logger.error "mongodb disconnect, giving up!"
 
-# bootstrap models
-require('./models')()
-
 # bootstrap passport config
-require('./config/passport')(passport)
+require('./server/config/passport')(passport)
 
 # express configuration
-app = require("./config/express")(passport, db, logger, root_path)
+app = require("./server/config/express")(passport, db, logger, root_path)
+require('./server/config/globals')(app)
 
 # bootstrap routes
-require("./routes")(app)
+require('./server/routes')(app)
+
+# bootstrap routes based on *.route.coffee naming
+# files = glob.sync 'server/**/*.route.{js,coffee}'
+# for file in files when file.lastIndexOf("server/specs/", 0) isnt 0
+#   logger.info "Found a route file, #{file} - requiring it"
+#   require(path.join __dirname, file)(app)
 
 # start the app
 app.listen app.get('port'), ->
-  logger.info "mean.coffee server listening on port #{@address().port} in #{config.ENV} mode"
+  logger.info "app server listening on port #{@address().port} in #{config.ENV} mode"
 

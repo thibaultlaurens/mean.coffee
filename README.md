@@ -4,7 +4,11 @@ mean.coffee
 WORK IN PROGRESS
 
 (Mongo, Express, Angular, Node) - A Simple, Scalable and Easy starting point for full stack javascript web development
-inspired by http://mean.io/
+originally inspired by http://mean.io/
+
+BK Note: Signficant structure changes in progress. Additional baseline setup as
+well, inspired by ngbp. A lot of the original guidance will not be valid. README
+to be updated when stable.
 
 
 ### How to mean.coffee

@@ -1,97 +1,136 @@
-gulp = require 'gulp'
-gutil = require 'gulp-util'
-uglify = require 'gulp-uglify'
-coffee = require 'gulp-coffee'
-watch = require 'gulp-watch'
-concat = require 'gulp-concat'
-imagemin = require 'gulp-imagemin'
-rimraf = require 'gulp-rimraf'
-flatten = require 'gulp-flatten'
-minifycss = require 'gulp-minify-css'
-size = require 'gulp-size'
+gulp              = require 'gulp'
+sass              = require 'gulp-sass'
+coffee            = require 'gulp-coffee'
+concat            = require 'gulp-concat'
+gutil             = require 'gulp-util'
+rename            = require 'gulp-rename'
+clean             = require 'gulp-clean'
+gulpif            = require 'gulp-if'
+karma           = require('karma').server
 
+# Minification
+uglify            = require 'gulp-uglify'
+minifyHTML        = require 'gulp-minify-html'
+minifyCSS         = require 'gulp-minify-css'
+imagemin          = require 'gulp-imagemin'
+pngcrush          = require 'imagemin-pngcrush'
+
+# Angular Helpers
+ngAnnotate        = require 'gulp-ng-annotate'
+htmlify           = require 'gulp-angular-htmlify'
+
+del               = require 'del'
+flatten           = require 'gulp-flatten'
+size              = require 'gulp-size'
+livereload        = require 'gulp-livereload'
 
 path =
-  scripts: 'app/scripts/**/*.coffee'
-  styles: 'app/styles/**/*.css'
-  bower: 'app/components'
-  html: 'app/html/**/*.html'
-  assets: 'app/assets/*'
+  app:
+    scripts: ["client/app/**/*.{coffee,js}", "client/app/**/*.{coffee,js}"] # All .js and .coffee files, starting with app.coffee or app.js
+    styles: "client/app/**/*.{scss,sass,css}" # css and scss files
+    bower: 'client/components'
+    templates: "client/app/**/*.{html,jade}" # All html, jade, and markdown files used as templates within the app
+    images: "client/app/images/*.{png,jpg,jpeg,gif,ico}" # All image files
+    static: "client/app/static/*.*" # Any other static content such as the favicon
 
+tasks = {}
 
-gulp.task 'scripts', () ->
-  gulp.src(path.scripts)
-    .pipe(coffee({bare: true}).on 'error', gutil.log)
-    .pipe(concat 'app.min.js')
+gulp.task 'test', (done) ->
+  karma.start
+    configFile: __dirname + '/karma.conf.js'
+    #singleRun: true
+  , done
+
+gulp.task 'scripts', tasks.scripts = () ->
+  coffeestream = coffee({bare: true})
+  coffeestream.on("error", gutil.log)
+  gulp.src path.app.scripts
+    .pipe(gulpif(/[.]coffee$/, coffeestream))
+    .pipe(ngAnnotate())
+    .pipe(concat("app.js"))
     .pipe(size())
-    .pipe(gulp.dest '_public/js')
-
-gulp.task 'uglyscripts', () ->
-  gulp.src(path.scripts)
-    .pipe(coffee({bare: true}).on 'error', gutil.log)
-    .pipe(concat 'app.min.js')
+    .pipe(gulp.dest("www/js"))
     .pipe(uglify())
+    .pipe(rename({extname: ".min.js"}))
     .pipe(size())
-    .pipe(gulp.dest '_public/js')
+    .pipe(gulp.dest "www/js")
+    .pipe(livereload())
+gulp.task 'scripts:clean', ['clean'], tasks.scripts
 
-gulp.task 'styles', () ->
-  gulp.src(path.styles)
-    .pipe(concat 'app.min.css')
-    .pipe(minifycss())
+gulp.task "styles", tasks.styles = ->
+  sassstream = sass({
+      errLogToConsole: true,
+      sourceComments: 'normal'
+      sourcemap: false,
+      unixNewlines: true,
+      style: 'nested',
+      debugInfo: false,
+      quiet: false,
+      lineNumbers: true,
+      bundleExec: true
+    })
+  sassstream.on("error", gutil.log)
+
+  gulp.src path.app.styles
+    .pipe(gulpif(/[.]sass|scss$/, sassstream))
+    .pipe(concat 'app.css')
     .pipe(size())
-    .pipe(gulp.dest '_public/css')
-
-gulp.task 'jquery', () ->
-  gulp.src('app/components/jquery/jquery.min.js')
+    .pipe(gulp.dest "www/css")
+    .pipe(minifyCSS())
+    .pipe(rename({extname: ".min.css"}))
     .pipe(size())
-    .pipe(gulp.dest('_public/js'))
+    .pipe(gulp.dest "www/css")
+    .pipe(livereload())
+gulp.task 'styles:clean', ['clean'], tasks.styles
 
-gulp.task 'bowerjs', () ->
-  gulp.src('app/components/**/*.min.js', !'app/components/jquery/jquery.min.js')
+gulp.task 'templates', tasks.templates = ->
+  gulp.src path.app.templates
+    .pipe(size())
+    .pipe(gulp.dest('www'))
+    .pipe(livereload())
+gulp.task 'templates:clean', ['clean'], tasks.templates
+
+gulp.task 'jquery', tasks.jquery = ->
+  gulp.src('client/components/jquery/dist/jquery.min.js')
+    .pipe(size())
+    .pipe(gulp.dest('www/js'))
+gulp.task 'jquery:clean', ['clean'], tasks.jquery
+
+gulp.task 'bowerjs', tasks.bowerjs = ->
+  gulp.src('client/components/**/*.min.js', !'client/components/jquery/dist/jquery.min.js')
     .pipe(flatten())
     .pipe(concat 'vendor.min.js')
     .pipe(size())
-    .pipe(gulp.dest('_public/js'))
+    .pipe(gulp.dest('www/js'))
+gulp.task 'bowerjs:clean', ['clean'], tasks.bowerjs
 
-gulp.task 'bowercss', () ->
-  gulp.src('app/components/**/*.min.css')
+gulp.task 'bowercss', tasks.bowercss = ->
+  gulp.src('client/components/**/*.min.css')
     .pipe(flatten())
     .pipe(concat 'vendor.min.css')
     .pipe(size())
-    .pipe(gulp.dest('_public/css'))
+    .pipe(gulp.dest('www/css'))
+gulp.task 'bowercss:clean', ['clean'], tasks.bowercss
 
-gulp.task 'html', () ->
-  gulp.src(path.html)
-    .pipe(size())
-    .pipe(gulp.dest '_public')
-
-gulp.task 'assets', () ->
-  gulp.src(path.assets)
+gulp.task 'assets', tasks.assets = ->
+  gulp.src(path.app.images)
     .pipe(imagemin({optimizationLevel: 5}))
     .pipe(size())
-    .pipe(gulp.dest '_public/assets')
-
-gulp.task 'ngroute', () ->
-  gulp.src('app/components/angular-route/angular-route.min.js')
-  .pipe(flatten())
-  .pipe(concat 'ngroute.min.js')
-  .pipe(size())
-  .pipe(gulp.dest('_public/js'))
+    .pipe(gulp.dest 'www/assets')
+    .pipe(livereload())
+gulp.task 'assets:clean', ['clean'], tasks.assets
 
 gulp.task 'watch', () ->
-  gulp.watch path.scripts, ['scripts']
-  gulp.watch path.styles, ['styles']
-  gulp.watch path.bower, ['bowerjs']
-  gulp.watch path.html, ['html']
-  gulp.watch path.assets, ['assets']
+  livereload.listen()
+  gulp.watch path.app.scripts, ['scripts']
+  gulp.watch path.app.styles, ['styles']
+  gulp.watch path.app.bower, ['bowerjs', 'bowercss']
+  gulp.watch path.app.templates, ['templates']
+  gulp.watch path.app.images, ['images']
 
-gulp.task 'clean', () ->
-  gulp.src('_public', { read: false })
-    .pipe(rimraf())
+gulp.task 'clean', (cb) ->
+  del(['www/**'], cb)
 
+gulp.task 'default', ['build', 'watch']
 
-gulp.task 'default', ['styles', 'html', 'jquery', 'bowerjs', 'bowercss', 'assets', 'ngroute']
-
-gulp.task 'dev', ['default', 'scripts', 'watch']
-
-gulp.task 'build', ['clean', 'default', 'uglyscripts']
+gulp.task 'build', ['scripts:clean', 'styles:clean', 'templates:clean', 'jquery:clean', 'bowerjs:clean', 'bowercss:clean', 'assets:clean']
